@@ -49,7 +49,6 @@ models/
 # Document data
 data/
 *.pdf
-*.md
 *.txt
 
 # Logs
