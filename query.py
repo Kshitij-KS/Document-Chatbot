@@ -1,6 +1,6 @@
 import argparse
-from langchain_chroma import Chroma  # Updated import
-from langchain_huggingface import HuggingFaceEmbeddings  # Match database embeddings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
