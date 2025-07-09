@@ -7,9 +7,6 @@ from dotenv import load_dotenv
 import os
 import shutil
 
-# Load environment variables (optional since we're using HuggingFace)
-load_dotenv()
-
 # Constants
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
@@ -22,7 +19,6 @@ def get_embedding_function():
     return embeddings
 
 def load_documents():
-    # Create directory if it doesn't exist
     if not os.path.exists(DATA_PATH):
         os.makedirs(DATA_PATH, exist_ok=True)
         print(f"Created directory: {DATA_PATH}")
@@ -44,7 +40,6 @@ def split_text(documents: list[Document]):
     chunks = text_splitter.split_documents(documents)
     print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
 
-    # Safe chunk access with length check
     if len(chunks) > 10:
         document = chunks[10]
         print(document.page_content)
@@ -63,11 +58,9 @@ def save_to_chroma(chunks: list[Document]):
         print("No chunks to save.")
         return
     
-    # Clear out the database first
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
 
-    # FIXED: Use get_embedding_function() instead of OpenAIEmbeddings()
     db = Chroma.from_documents(
         chunks, 
         get_embedding_function(), 
