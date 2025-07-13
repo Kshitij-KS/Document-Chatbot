@@ -1,7 +1,7 @@
 import argparse
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 import os
@@ -59,8 +59,9 @@ def main():
     print(prompt)
 
     try:
-        model = ChatOpenAI()
-        response = model.invoke(prompt) 
+        model = ChatGroq(model="llama3-8b-8192",)
+        response = model.invoke(prompt)
+ 
         response_text = response.content
     except Exception as e:
         print(f"Error with OpenAI API: {e}")
