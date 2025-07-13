@@ -59,12 +59,11 @@ def main():
     print(prompt)
 
     try:
-        model = ChatGroq(model="llama3-8b-8192",)
+        model = ChatGroq(model="llama3-8b-8192")
         response = model.invoke(prompt)
- 
         response_text = response.content
     except Exception as e:
-        print(f"Error with OpenAI API: {e}")
+        print(f"Error with Groq API: {e}")
         return
 
     sources = [doc.metadata.get("source", None) for doc, _score in results]
