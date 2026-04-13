@@ -1,4 +1,5 @@
 from langchain_community.document_loaders import DirectoryLoader
+import functools
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -11,6 +12,7 @@ import shutil
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
 
+@functools.lru_cache()
 def get_embedding_function():
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",

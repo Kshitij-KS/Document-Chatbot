@@ -1,5 +1,6 @@
 import argparse
 from langchain_chroma import Chroma
+import functools
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain.prompts import ChatPromptTemplate
@@ -21,6 +22,7 @@ Answer the question based only on the following context:
 Answer the question based on the above context: {question}
 """
 
+@functools.lru_cache()
 def get_embedding_function():
     # Same embed function as used in createDatabase.py
     embeddings = HuggingFaceEmbeddings(
