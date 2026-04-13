@@ -36,6 +36,10 @@ def main():
     args = parser.parse_args()
     query_text = args.query_text
 
+    # Security: Validate input length
+    if len(query_text) > 1000:
+        parser.error("Query text too long (max 1000 characters)")
+
     embedding_function = get_embedding_function()
     db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
 
