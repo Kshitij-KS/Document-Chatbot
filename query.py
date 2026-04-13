@@ -4,7 +4,6 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
-import os
 
 # Loading env variables
 load_dotenv()
