@@ -1,8 +1,8 @@
-from langchain_community.document_loaders import DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_community.document_loaders import DirectoryLoader, PyPDFDirectoryLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from dotenv import load_dotenv
 import os
 import shutil
@@ -22,12 +22,17 @@ def load_documents():
     if not os.path.exists(DATA_PATH):
         os.makedirs(DATA_PATH, exist_ok=True)
         print(f"Created directory: {DATA_PATH}")
-        print("Please add your .md files to this directory and run again.")
+        print("Please add your .md or .pdf files to this directory and run again.")
         return []
     
-    loader = DirectoryLoader(DATA_PATH, glob="*.md")
-    documents = loader.load()
-    print(f"Loaded {len(documents)} documents from {DATA_PATH}")
+    md_loader = DirectoryLoader(DATA_PATH, glob="*.md")
+    md_documents = md_loader.load()
+
+    pdf_loader = PyPDFDirectoryLoader(DATA_PATH)
+    pdf_documents = pdf_loader.load()
+
+    documents = md_documents + pdf_documents
+    print(f"Loaded {len(documents)} documents ({len(md_documents)} markdown, {len(pdf_documents)} PDF) from {DATA_PATH}")
     return documents
 
 def split_text(documents: list[Document]):

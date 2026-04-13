@@ -9,7 +9,7 @@ A Python-based document chatbot that uses vector embeddings and retrieval-augmen
 - **Semantic Search**: Find relevant document chunks using similarity search
 - **Question Answering**: Generate contextual answers based on retrieved document content
 - **Local Processing**: No API costs for embeddings (HuggingFace models run locally)
-- **Flexible LLM Support**: Compatible with OpenAI API or local models via Ollama
+- **Flexible LLM Support**: Compatible with Groq API for free and fast generation
 
 ## Project Structure
 
@@ -44,10 +44,7 @@ pip install "unstructured[md]"
 
 Create a `.env` file in the project root:
 
-OPENAI_API_KEY=your_openai_api_key_here
-
-
-**Note**: OpenAI API key is optional if using local models only.
+GROQ_API_KEY=your_groq_api_key_here
 
 ## Usage
 
