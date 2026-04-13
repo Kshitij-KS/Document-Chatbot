@@ -2,7 +2,7 @@ import argparse
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 import os
 
@@ -33,8 +33,10 @@ def main():
     # Creating CLI
     parser = argparse.ArgumentParser()
     parser.add_argument("query_text", type=str, help="The query text.")
+    parser.add_argument("--threshold", type=float, default=0.4, help="The similarity threshold score for considering results valid.")
     args = parser.parse_args()
     query_text = args.query_text
+    threshold = args.threshold
 
     embedding_function = get_embedding_function()
     db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
@@ -48,7 +50,7 @@ def main():
         print(f"Result {i+1}: Score = {score:.3f}")
         print(f"Content preview: {doc.page_content[:100]}...")
     
-    if len(results) == 0 or results[0][1] < 0.4:
+    if len(results) == 0 or results[0][1] < threshold:
         print(f"Unable to find matching results.")
         return
 
